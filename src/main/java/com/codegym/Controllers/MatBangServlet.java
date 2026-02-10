@@ -57,7 +57,6 @@ public class MatBangServlet extends HttpServlet {
                 String ngayBatDau = req.getParameter("ngayBatDau");
                 String ngayKetThuc = req.getParameter("ngayKetThuc");
 
-                // --- VALIDATION SERVER SIDE (Ăn trọn điểm phần này) ---
                 if (!Validator.isValidMaMatBang(ma)) throw new IllegalArgumentException("Mã mặt bằng sai định dạng (XXX-XX-XX)!");
                 if (dao.exists(ma)) throw new IllegalArgumentException("Mã mặt bằng đã tồn tại!");
                 if (Double.parseDouble(dtStr) <= 20) throw new IllegalArgumentException("Diện tích phải > 20m2!");
@@ -73,7 +72,6 @@ public class MatBangServlet extends HttpServlet {
 
             } catch (Exception e) {
                 req.setAttribute("error", e.getMessage());
-                // Giữ lại dữ liệu cũ để người dùng không phải nhập lại
                 req.setAttribute("old", req.getParameterMap());
                 req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
             }

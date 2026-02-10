@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private static final String URL = "jdbc:sqlserver://localhost;"
             + "instanceName=SQLEXPRESS;"
-            + "databaseName=BankDB;"
+            + "databaseName=QuanLyMatBang;"
             + "encrypt=true;"
             + "trustServerCertificate=true;";
 

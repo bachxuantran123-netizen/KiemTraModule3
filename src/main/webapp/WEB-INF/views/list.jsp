@@ -19,17 +19,19 @@
             <label>Loại mặt bằng:</label>
             <select name="loaiMatBang" class="form-select">
                 <option value="">-- Tất cả --</option>
-                <option value="Cho thuê">Cho thuê</option>
-                <option value="Trọn gói">Trọn gói</option>
+                <option value="Cho thuê" ${param.loaiMatBang == 'Cho thuê' ? 'selected' : ''}>Cho thuê</option>
+                <option value="Trọn gói" ${param.loaiMatBang == 'Trọn gói' ? 'selected' : ''}>Trọn gói</option>
             </select>
         </div>
         <div class="col-md-3">
             <label>Giá tối đa:</label>
-            <input type="number" name="giaTien" class="form-control" placeholder="Nhập giá...">
+            <input type="number" name="giaTien" class="form-control"
+                   placeholder="Nhập giá..." value="${param.giaTien}">
         </div>
         <div class="col-md-3">
             <label>Tầng:</label>
-            <input type="number" name="tang" class="form-control" placeholder="Nhập tầng...">
+            <input type="number" name="tang" class="form-control"
+                   placeholder="Nhập tầng..." value="${param.tang}">
         </div>
         <div class="col-md-3 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>

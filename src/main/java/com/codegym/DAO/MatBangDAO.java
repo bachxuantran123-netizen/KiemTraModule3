@@ -8,10 +8,8 @@ import java.util.List;
 
 public class MatBangDAO {
 
-    // 1. Lấy danh sách + Sắp xếp Diện tích tăng dần (Yêu cầu 2)
     public List<MatBang> selectAll() {
         List<MatBang> list = new ArrayList<>();
-        // ORDER BY dien_tich ASC là bắt buộc để ăn điểm sắp xếp
         String sql = "SELECT * FROM MatBang ORDER BY dien_tich ASC";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -23,7 +21,6 @@ public class MatBangDAO {
         return list;
     }
 
-    // 2. Thêm mới
     public void insert(MatBang mb) throws SQLException {
         String sql = "INSERT INTO MatBang (ma_mat_bang, dien_tich, trang_thai, tang, loai_mat_bang, mo_ta, gia_tien, ngay_bat_dau, ngay_ket_thuc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -41,7 +38,6 @@ public class MatBangDAO {
         }
     }
 
-    // 3. Xóa
     public boolean delete(String maMatBang) {
         String sql = "DELETE FROM MatBang WHERE ma_mat_bang = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -51,12 +47,10 @@ public class MatBangDAO {
         } catch (SQLException e) { e.printStackTrace(); return false; }
     }
 
-    // 4. Tìm kiếm nâng cao (3 tiêu chí) - (10 điểm)
     public List<MatBang> search(String loaiMatBang, String giaTien, String tang) {
         List<MatBang> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM MatBang WHERE 1=1");
 
-        // Nối chuỗi động (Dynamic SQL)
         if (loaiMatBang != null && !loaiMatBang.isEmpty()) {
             sql.append(" AND loai_mat_bang LIKE ?");
         }
@@ -64,11 +58,10 @@ public class MatBangDAO {
             sql.append(" AND tang = ?");
         }
         if (giaTien != null && !giaTien.isEmpty()) {
-            // Giả sử tìm kiếm giá tiền là <= mức giá nhập vào
             sql.append(" AND gia_tien <= ?");
         }
 
-        sql.append(" ORDER BY dien_tich ASC"); // Vẫn phải giữ sắp xếp khi tìm kiếm
+        sql.append(" ORDER BY dien_tich ASC");
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
@@ -90,7 +83,6 @@ public class MatBangDAO {
         return list;
     }
 
-    // 5. Check trùng mã (Cho Validate Server side)
     public boolean exists(String code) {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM MatBang WHERE ma_mat_bang = ?")) {
